@@ -50,6 +50,8 @@ namespace CreditCards.UITests
                 driver.Navigate().GoToUrl(HomeUrl);
                 DemoHelper.Pause();
 
+                string initialToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
                 driver.Navigate().GoToUrl(AboutUrl);
                 DemoHelper.Pause();
 
@@ -58,6 +60,11 @@ namespace CreditCards.UITests
 
                 Assert.Equal(HomeUrl, driver.Url);
                 Assert.Equal(HomeTitle, driver.Title);
+
+                // Assert page is reloaded - by checking GUID
+                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
+                Assert.NotEqual(initialToken, reloadedToken);
             }
         }
 
